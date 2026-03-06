@@ -3,14 +3,19 @@ import { getUser, logout, getCart, clearCart, saveUser } from './cart.js';
 import { updateCartBadge, renderProductGrid, renderProductDetail, renderCartPage, renderCheckout } from './ui.js';
 
 async function init() {
+  // 1. Initial Logic
   let products = [];
   try {
     const rawProducts = await fetchProducts();
     products = rawProducts.map(p => ({ ...p, price: parseFloat(p.price) }));
   } catch (err) {
-    console.error("API error, using local data", err);
-    products = window.products || [];
+    console.error("API error", err);
   }
+
+  // 2. Initial Render
+  console.log("Found Products:", products.length);
+  const id = new URLSearchParams(window.location.search).get('id');
+  if (id) console.log("Current Product ID:", id);
 
   renderProductGrid(products);
   renderProductDetail(products);
@@ -18,22 +23,26 @@ async function init() {
   renderCheckout(products);
   updateCartBadge();
 
+  // 3. Setup Listeners
   document.addEventListener('cartUpdated', updateCartBadge);
 
+  // Filter listener
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.onclick = () => renderProductGrid(products, btn.innerText);
   });
 
+  // Auth Status (Fixed)
   const user = getUser();
   const authLink = document.getElementById('auth-link');
   if (user && authLink) {
     authLink.textContent = `Hi, ${user.name}`;
-    authLink.onclick = (e) => {
-      e.preventDefault();
-      if (confirm('Logout?')) logout();
+    authLink.onclick = (e) => { 
+      e.preventDefault(); 
+      if (confirm('Logout?')) logout(); 
     };
   }
 
+  // Login Form
   const loginForm = document.getElementById('login-form');
   if (loginForm) {
     loginForm.onsubmit = async (e) => {
@@ -44,11 +53,12 @@ async function init() {
         const data = await login(email, password);
         saveUser(data.user);
         localStorage.setItem('token', data.token);
-        window.location.href = 'index.html';
+        window.location.href = '/';
       } catch (err) { alert('Login Failed: ' + err.message); }
     };
   }
 
+  // Register Form
   const registerForm = document.getElementById('register-form');
   if (registerForm) {
     registerForm.onsubmit = async (e) => {
@@ -61,21 +71,6 @@ async function init() {
         alert('Registration Success! Please Login.');
         window.location.reload();
       } catch (err) { alert('Registration Failed'); }
-    };
-  }
-
-  const checkoutForm = document.getElementById('checkout-form');
-  if (checkoutForm) {
-    checkoutForm.onsubmit = async (e) => {
-      e.preventDefault();
-      if (!user) { alert('Please login to checkout'); return; }
-      const orderData = { user, items: getCart() };
-      try {
-        await submitOrder(orderData);
-        alert('Order Success!');
-        clearCart();
-        window.location.href = 'index.html';
-      } catch (err) { alert('Order Failed'); }
     };
   }
 }

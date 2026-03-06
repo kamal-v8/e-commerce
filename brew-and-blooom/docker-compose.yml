@@ -4,15 +4,17 @@ services:
   db:
     image: postgres:15-alpine
     container_name: coffee_db
+    networks:
+      - coffee-net
     environment:
-      POSTGRES_USER: ${DB_USER:-postgres}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
-      POSTGRES_DB: ${DB_NAME:-postgres}
+      # These variables must exist in your .env file
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      # FIX: Added leading / to make it an absolute path
       - ./backend/schema.sql:/docker-entrypoint-initdb.d/schema.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
@@ -23,10 +25,11 @@ services:
   backend:
     build: ./backend
     container_name: coffee_backend
+    networks:
+      - coffee-net
     ports:
       - "3000:3000"
     environment:
-      # FIX: Removed the spaces after = (e.g., DB_USER=${DB_USER})
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
@@ -40,10 +43,16 @@ services:
   frontend:
     build: ./frontend
     container_name: coffee_frontend
+    networks:
+      - coffee-net
     ports:
       - "8080:80"
     depends_on:
       - backend
+
+networks:
+  coffee-net:
+    driver: bridge
 
 volumes:
   postgres_data:

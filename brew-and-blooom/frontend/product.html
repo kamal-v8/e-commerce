@@ -12,17 +12,17 @@
   <header>
     <div class="container">
       <nav>
-        <a href="index.html" class="logo">Brew & Bloom</a>
+        <a href="/" class="logo">Brew & Bloom</a>
         <div class="menu-toggle"><span>&#9776;</span></div>
         <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="shop.html">Shop</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="auth.html" id="auth-link">Login</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/shop">Shop</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/auth" id="auth-link">Login</a></li>
         </ul>
         <div class="nav-icons">
-          <a href="cart.html" class="cart-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          <a href="/cart" class="cart-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
             <span class="cart-count">0</span>
           </a>
         </div>
@@ -37,55 +37,55 @@
     </div>
   </section>
 
-  <!-- <!-- <section class="related-products"> --> -->
-  <!-- <!--   <div class="container"> --> -->
-  <!--     <h2 class="section-title">You Might Also Like</h2> -->
-  <!--     <div class="products-grid"> -->
-  <!--       <!-- Could be injected or static placeholders --> -->
-  <!--       <article class="product-card"> -->
-  <!--           <a href="product.html?id=1" class="product-image"> -->
-  <!--             <!-- <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80" alt="Ethiopian Yirgacheffe"> --> -->
-  <!--           </a> -->
-  <!--           <div class="product-info"> -->
-  <!--             <!-- <h3 class="product-title"><a href="product.html?id=1">Ethiopian Yirgacheffe</a></h3> --> -->
-  <!--             <p class="product-price">$19.00</p> -->
-  <!--             <div class="product-actions"> -->
-  <!--               <a href="product.html?id=1" class="btn btn-sm btn-outline">View</a> -->
-  <!--               <button onclick="addToCart(1, 1)" class="btn btn-sm">Add</button> -->
-  <!--             </div> -->
-  <!--           </div> -->
-  <!--       </article> -->
-  <!--       <article class="product-card"> -->
-  <!--           <a href="product.html?id=2" class="product-image"> -->
-  <!--             <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80" alt="Colombian Supremo"> -->
-  <!--           </a> -->
-  <!--           <div class="product-info"> -->
-  <!--             <h3 class="product-title"><a href="product.html?id=2">Colombian Supremo</a></h3> -->
-  <!--             <p class="product-price">$16.50</p> -->
-  <!--             <div class="product-actions"> -->
-  <!--               <a href="product.html?id=2" class="btn btn-sm btn-outline">View</a> -->
-  <!--               <button onclick="addToCart(2, 1)" class="btn btn-sm">Add</button> -->
-  <!--             </div> -->
-  <!--           </div> -->
-  <!--       </article> -->
-  <!--       <article class="product-card"> -->
-  <!--           <a href="product.html?id=3" class="product-image"> -->
-  <!--               <img src="https://images.unsplash.com/photo-1512568400610-62da28bc8a13?auto=format&fit=crop&w=800&q=80" alt="Sumatra Mandheling"> -->
-  <!--           </a> -->
-  <!--           <div class="product-info"> -->
-  <!--               <h3 class="product-title"><a href="product.html?id=3">Sumatra Mandheling</a></h3> -->
-  <!--               <p class="product-price">$19.00</p> -->
-  <!--               <div class="product-actions"> -->
-  <!--               <a href="product.html?id=3" class="btn btn-sm btn-outline">View</a> -->
-  <!--               <button onclick="addToCart(3, 1)" class="btn btn-sm">Add</button> -->
-  <!--               </div> -->
-  <!--           </div> -->
-  <!--       </article> -->
-  <!--     </div> -->
-  <!--   </div> -->
-  <!-- </section> -->
+  <section class="related-products">
+    <div class="container">
+      <h2 class="section-title">You Might Also Like</h2>
+      <div class="products-grid">
+  Could be injected or static placeholders
+        <article class="product-card">
+            <a href="/product?id=1" class="product-image">
+  <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80" alt="Ethiopian Yirgacheffe">
+            </a>
+            <div class="product-info">
+  <h3 class="product-title"><a href="/product?id=1">Ethiopian Yirgacheffe</a></h3>
+              <p class="product-price">$19.00</p>
+              <div class="product-actions">
+                <a href="/product?id=1" class="btn btn-sm btn-outline">View</a>
+                <button onclick="addToCart(1, 1)" class="btn btn-sm">Add</button>
+              </div>
+            </div>
+        </article>
+        <article class="product-card">
+            <a href="/product?id=2" class="product-image">
+              <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80" alt="Colombian Supremo">
+            </a>
+            <div class="product-info">
+              <h3 class="product-title"><a href="/product?id=2">Colombian Supremo</a></h3>
+              <p class="product-price">$16.50</p>
+              <div class="product-actions">
+                <a href="/product?id=2" class="btn btn-sm btn-outline">View</a>
+                <button onclick="addToCart(2, 1)" class="btn btn-sm">Add</button>
+              </div>
+            </div>
+        </article>
+        <article class="product-card">
+            <a href="/product?id=3" class="product-image">
+                <img src="https://images.unsplash.com/photo-1512568400610-62da28bc8a13?auto=format&fit=crop&w=800&q=80" alt="Sumatra Mandheling">
+            </a>
+            <div class="product-info">
+                <h3 class="product-title"><a href="/product?id=3">Sumatra Mandheling</a></h3>
+                <p class="product-price">$19.00</p>
+                <div class="product-actions">
+                <a href="/product?id=3" class="btn btn-sm btn-outline">View</a>
+                <button onclick="addToCart(3, 1)" class="btn btn-sm">Add</button>
+                </div>
+            </div>
+        </article>
+      </div>
+    </div>
+  </section>
   <!---->
-  <!-- <!-- Footer --> -->
+  <!-- Footer -->
   <footer>
     <div class="container">
       <div class="footer-grid">
@@ -96,9 +96,9 @@
         <div class="footer-col">
           <h3>Shop</h3>
           <ul>
-            <li><a href="shop.html">All Coffee</a></li>
-            <li><a href="shop.html">Subscriptions</a></li>
-            <li><a href="shop.html">Equipment</a></li>
+            <li><a href="/shop">All Coffee</a></li>
+            <li><a href="/shop">Subscriptions</a></li>
+            <li><a href="/shop">Equipment</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -121,7 +121,7 @@
     </div>
   </footer>
 
-  
+
   <script type="module" src="app.js"></script>
 </body>
 </html>

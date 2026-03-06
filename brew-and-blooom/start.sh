@@ -1,23 +1,18 @@
 #!/bin/bash
 
-# --- Brew & Bloom: All-in-One Startup Script ---
-
 echo " Starting Brew & Bloom Project..."
 
-# 1. Start PostgreSQL (if not already running)
 echo " Checking Database..."
 if ! systemctl is-active --quiet postgresql; then
   echo " Starting PostgreSQL service (may require password)..."
   sudo systemctl start postgresql
 fi
 
-# 2. Start Backend Server
 echo " Starting Backend (Port 3000)..."
 cd backend
 node server.js &
 BACKEND_PID=$!
 
-# 3. Start Frontend Server
 echo " Starting Frontend (Port 8080)..."
 cd ../frontend
 # Use 'npx serve' if available, otherwise use Python's built-in server
@@ -35,6 +30,5 @@ echo " Backend:  http://localhost:3000"
 echo "------------------------------------------------"
 echo "Press Ctrl+C to stop everything."
 
-# Wait for Ctrl+C
 trap "kill $BACKEND_PID $FRONTEND_PID; exit" INT
 wait

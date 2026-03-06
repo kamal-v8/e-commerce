@@ -2,8 +2,13 @@ const CART_KEY = 'coffee_cart';
 const USER_KEY = 'coffee_user';
 
 export function getCart() {
-  const stored = localStorage.getItem(CART_KEY);
-  return stored ? JSON.parse(stored) : [];
+  try {
+    const stored = localStorage.getItem(CART_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch (e) {
+    localStorage.removeItem(CART_KEY);
+    return [];
+  }
 }
 
 export function saveCart(cart) {
@@ -46,8 +51,15 @@ export function clearCart() {
 }
 
 export function getUser() {
-  const user = localStorage.getItem(USER_KEY);
-  return user ? JSON.parse(user) : null;
+  try {
+    const user = localStorage.getItem(USER_KEY);
+    // Only return if it's a valid object with a name
+    const parsed = user ? JSON.parse(user) : null;
+    return (parsed && parsed.name) ? parsed : null;
+  } catch (e) {
+    localStorage.removeItem(USER_KEY);
+    return null;
+  }
 }
 
 export function saveUser(user) {
@@ -56,5 +68,6 @@ export function saveUser(user) {
 
 export function logout() {
   localStorage.removeItem(USER_KEY);
-  window.location.reload();
+  localStorage.removeItem('token');
+  window.location.href = '/';
 }
