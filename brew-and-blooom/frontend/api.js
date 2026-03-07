@@ -1,7 +1,8 @@
 // Dynamic BASE_URL: 
 // In development (local), we use http://localhost:3000
-// In Docker/Production, we use a relative path /api and let Nginx handle the routing
-const BASE_URL = window.location.origin.includes('localhost:8080') ? '/api' : 'http://localhost:3000/api';
+// In production (EC2), we use a relative path /api and let Nginx handle the routing
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const BASE_URL = isLocal ? 'http://localhost:3000/api' : '/api';
 
 export async function fetchProducts() {
   const response = await fetch(`${BASE_URL}/products`);
