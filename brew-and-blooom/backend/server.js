@@ -12,6 +12,30 @@ const register = new promClient.Registry();
 register.setDefaultLabels({ app: 'brew-and-bloom-api' });
 promClient.collectDefaultMetrics({ register });
 
+// --- Traffic Counter Start ---
+const httpRequestsTotal = new promClient.Counter({
+  name: 'http_requests_total',
+  help: 'Total number of HTTP requests',
+  labelNames: ['method', 'route', 'status']
+});
+register.registerMetric(httpRequestsTotal);
+
+// Middleware to count every request
+app.use((req, res, next) => {
+  res.on('finish', () => {
+    // We exclude the /metrics endpoint itself to avoid noise
+    if (req.path !== '/metrics') {
+      httpRequestsTotal.inc({
+        method: req.method,
+        route: req.path,
+        status: res.statusCode
+      });
+    }
+  });
+  next();
+});
+// --- Traffic Counter End ---
+
 app.use(cors());
 app.use(express.json());
 
@@ -51,30 +75,3 @@ app.post('/api/checkout', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
-
-
-
-
-
-const httpRequestsTotal = new promClient.Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
-});
-register.registerMetric(httpRequestsTotal);
-
-
-
-
-app.use((req, res, next) => {
-  res.on('finish', () => {
-    httpRequestsTotal.inc({
-      method: req.method,
-      route: req.path,
-      status: res.statusCode
-    });
-  });
-  next();
-})
-
-
