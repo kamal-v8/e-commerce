@@ -12,6 +12,40 @@ const register = new promClient.Registry();
 register.setDefaultLabels({ app: 'brew-and-bloom-api' });
 promClient.collectDefaultMetrics({ register });
 
+// --- Prometheus Metrics Start ---
+const httpRequestsTotal = new promClient.Counter({
+  name: 'http_requests_total',
+  help: 'Total number of HTTP requests',
+  labelNames: ['method', 'route', 'status']
+});
+register.registerMetric(httpRequestsTotal);
+
+const httpRequestDurationMicroseconds = new promClient.Histogram({
+  name: 'http_request_duration_seconds',
+  help: 'Duration of HTTP requests in seconds',
+  labelNames: ['method', 'route', 'status'],
+  buckets: [0.1, 0.3, 0.5, 0.7, 1, 3, 5, 7, 10] 
+});
+register.registerMetric(httpRequestDurationMicroseconds);
+
+// Middleware to count requests and measure duration
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    const duration = (Date.now() - start) / 1000; // Convert to seconds
+    if (req.path !== '/metrics') {
+      httpRequestsTotal.inc({
+        method: req.method,
+        route: req.path,
+        status: res.statusCode
+      });
+      httpRequestDurationMicroseconds.labels(req.method, req.path, res.statusCode).observe(duration);
+    }
+  });
+  next();
+});
+// --- Prometheus Metrics End ---
+
 app.use(cors());
 app.use(express.json());
 
@@ -51,30 +85,3 @@ app.post('/api/checkout', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
-
-
-
-
-
-const httpRequestsTotal = new promClient.Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
-});
-register.registerMetric(httpRequestsTotal);
-
-
-
-
-app.use((req, res, next) => {
-  res.on('finish', () => {
-    httpRequestsTotal.inc({
-      method: req.method,
-      route: req.path,
-      status: res.statusCode
-    });
-  });
-  next();
-})
-
-
