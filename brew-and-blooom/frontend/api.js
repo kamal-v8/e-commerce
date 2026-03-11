@@ -10,6 +10,9 @@ export async function fetchProducts() {
   return await response.json();
 }
 
+// const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+//     const BASE_URL = isLocal ? 'http://localhost:3000/api' : '/api';
+
 export async function login(email, password) {
   const response = await fetch(`${BASE_URL}/login`, {
     method: 'POST',
