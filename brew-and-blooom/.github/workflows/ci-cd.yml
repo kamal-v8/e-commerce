@@ -84,13 +84,12 @@
 #       - name: Run k6
 #         run: k6 run load-test.js
 
-name: brew-bloom-ci
-
 on:
   push:
     branches:
       - main
       - dev
+      - gh
   pull_request:
     branches:
       - main
@@ -98,6 +97,10 @@ on:
 jobs:
   Code-Quality:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -107,19 +110,12 @@ jobs:
         with:
           node-version: "20"
           cache: "npm"
-          cache-dependency-path: backend/package-lock.json
 
       - name: Install Dependencies
-        run: |
-          cd backend
-          npm install
+        run: npm install
 
       - name: Run Tests
-        run: |
-          cd backend
-          npm test || echo "No tests found, but moving forward!"
+        run: npm test || echo "No tests found, but moving forward!"
 
       - name: Security Audit
-        run: |
-          cd backend
-          npm audit --audit-level=high
+        run: npm audit --audit-level=high
