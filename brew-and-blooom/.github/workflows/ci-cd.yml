@@ -1,0 +1,37 @@
+name: brew&bloom-pipeline
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  Code-Quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Install Dependencies
+        run: |
+          cd backend
+          npm install
+
+      - name: Run Tests
+        run: |
+          cd backend
+          npm test
+
+      - name: Security Audit
+        run: |
+          cd backend
+          npm audit --audit-level=high
