@@ -1,10 +1,14 @@
-name: brew&bloom-pipeline
+name: brew-bloom-pipeline
 
 on:
   push:
-    branches: [main, dev]
+    branches:
+      - main
+      - dev
   pull_request:
-    branches: [main, dev]
+    branches:
+      - main
+      - dev
 
 jobs:
   Code-Quality:
