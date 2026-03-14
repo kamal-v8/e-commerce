@@ -1,89 +1,4 @@
-# name: brew-bloom-pipeline
-#
-# on:
-#   push:
-#     branches:
-#       - main
-#       - dev
-#   pull_request:
-#     branches:
-#       - main
-#       - dev
-#
-# jobs:
-#   Code-Quality:
-#     runs-on: ubuntu-latest
-#
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v4
-#
-#       - name: Setup Nodejs
-#         uses: actions/setup-node@v4
-#         with:
-#           node-version: "20"
-#           cache: "npm"
-#           cache-dependency-path: backend/package-lock.json
-#
-#       - name: Install Dependencies
-#         run: |
-#           cd backend
-#           npm install
-#
-#       - name: Run Tests
-#         run: |
-#           cd backend
-#           npm test
-#
-#       - name: Security Audit
-#         run: |
-#           cd backend
-#           npm audit --audit-level=high
-#
-#   Load-Test:
-#     runs-on: ubuntu-latest
-#
-#     services:
-#       postgres:
-#         image: postgres:15-alpine
-#         env:
-#           POSTGRES_USER: user
-#           POSTGRES_PASSWORD: password
-#           POSTGRES_DB: coffee-db
-#         ports:
-#           - 5432:5432
-#         options: >-
-#           --health-cmd pg_isready
-#           --health-interval  10s
-#           --health-timeout 5s
-#           --health-retries 5
-#
-#     steps:
-#       - name: CheckOut Code
-#         uses: actions/checkout@v4
-#
-#       - name: Setup Backend
-#         env:
-#           DB_USER: user
-#           DB_PASSWORD: password
-#           DB_NAME: coffee
-#           DB_HOST: localhost
-#           DB_PORT: 5432
-#           PORT: 5432
-#         run: |
-#           cd backend
-#           npm install
-#           node server.js &
-#           sleep 5
-#
-#       - name: Install K6
-#         run: |
-#           curl https://github.com/grafana/k6/releases/download/v0.49.0/k6-v0.49.0-linux-amd64.tar.gz -L | tar -xz --strip-components 1
-#           sudo cp k6 /usr/bin/k6
-#
-#       - name: Run k6
-#         run: k6 run load-test.js
-
+name: bloom-brew-ci
 on:
   push:
     branches:
@@ -93,6 +8,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   Code-Quality:
