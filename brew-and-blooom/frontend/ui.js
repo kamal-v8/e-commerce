@@ -145,6 +145,28 @@ export function renderProductDetail(products) {
   document.getElementById('add-to-cart-btn').onclick = () => addToCart(p.id, parseInt(input.value));
 }
 
+export function renderCheckout(products) {
+  const container = document.getElementById('checkout-form-container');
+  if (!container) return;
+
+  const cart = getCart();
+  let subtotal = 0;
+  cart.forEach(item => {
+    const p = products.find(prod => prod.id === item.id);
+    if (p) subtotal += p.price * item.quantity;
+  });
+
+  const orderSummary = document.getElementById('checkout-summary');
+  if (orderSummary) {
+    orderSummary.innerHTML = `
+      <h3>Order Summary</h3>
+      <div class="summary-row"><span>Subtotal</span><span>$${subtotal.toFixed(2)}</span></div>
+      <div class="summary-row"><span>Shipping</span><span>Free</span></div>
+      <div class="total-row summary-row"><span>Total</span><span>$${subtotal.toFixed(2)}</span></div>
+    `;
+  }
+}
+
 export function setupFooter() {
   const form = document.getElementById('subscribe-form');
   const msg = document.getElementById('subscribe-msg');
