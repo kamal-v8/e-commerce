@@ -17,11 +17,19 @@ CREATE TABLE IF NOT EXISTS products (
     description TEXT
 );
 
--- Seed Initial Products
+-- Seed Initial Products (Using INSERT INTO ... SELECT for robust seeding)
 INSERT INTO products (name, price, category, image, description)
-VALUES 
-('Ethiopian Yirgacheffe', 18.90, 'Light Roast', 'assets/coffee-product-1.jpg', 'Bright, floral coffee with notes of jasmine and lemon.'),
-('Espresso Mandheling', 19.00, 'Medium Roast', 'assets/coffee-product-3.jpg', 'Full-bodied and earthy with low acidity.'),
-('Colombian Supremo', 16.50, 'Dark Roast', 'assets/coffee-product-2.jpg', 'Balanced and smooth with a nutty sweetness and caramel finish.'),
-('Sumatra Blend', 20.00, 'Dark Roast', 'assets/coffee-product-4.jpg', 'Rich crema and intense flavor. Perfect for espresso machines.')
-ON CONFLICT DO NOTHING;
+SELECT 'Ethiopian Yirgacheffe', 18.90, 'Light Roast', 'assets/coffee-product-1.jpg', 'Bright, floral coffee with notes of jasmine and lemon.'
+WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Ethiopian Yirgacheffe');
+
+INSERT INTO products (name, price, category, image, description)
+SELECT 'Espresso Mandheling', 19.00, 'Medium Roast', 'assets/coffee-product-3.jpg', 'Full-bodied and earthy with low acidity.'
+WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Espresso Mandheling');
+
+INSERT INTO products (name, price, category, image, description)
+SELECT 'Colombian Supremo', 16.50, 'Dark Roast', 'assets/coffee-product-2.jpg', 'Balanced and smooth with a nutty sweetness and caramel finish.'
+WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Colombian Supremo');
+
+INSERT INTO products (name, price, category, image, description)
+SELECT 'Sumatra Blend', 20.00, 'Dark Roast', 'assets/coffee-product-4.jpg', 'Rich crema and intense flavor. Perfect for espresso machines.'
+WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Sumatra Blend');
