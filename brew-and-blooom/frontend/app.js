@@ -1,6 +1,6 @@
 import { fetchProducts, submitOrder, login, register } from './api.js';
 import { getUser, logout, getCart, clearCart, saveUser } from './cart.js';
-import { updateCartBadge, renderProductGrid, renderProductDetail, renderCartPage, renderCheckout } from './ui.js';
+import { updateCartBadge, renderProductGrid, renderProductDetail, renderCartPage, renderCheckout, setupFooter } from './ui.js';
 
 async function init() {
   // 1. Initial Logic
@@ -22,6 +22,7 @@ async function init() {
   renderCartPage(products);
   renderCheckout(products);
   updateCartBadge();
+  setupFooter();
 
   // 3. Setup Listeners
   document.addEventListener('cartUpdated', updateCartBadge);

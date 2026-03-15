@@ -71,7 +71,11 @@
         <div class="footer-col">
           <h3>Stay Connected</h3>
           <p>Subscribe for updates and offers.</p>
-          <input type="email" placeholder="Enter Email Address..." style="padding: 0.5rem; width: 100%; margin-top: 0.5rem;">
+          <form id="subscribe-form" style="display: flex; gap: 5px; margin-top: 0.5rem;">
+            <input type="email" id="subscribe-email" placeholder="Email Address" required style="padding: 0.5rem; flex-grow: 1;">
+            <button type="submit" class="btn btn-sm" style="padding: 0.5rem 1rem;">Go</button>
+          </form>
+          <p id="subscribe-msg" style="font-size: 0.8rem; margin-top: 5px; display: none;"></p>
         </div>
       </div>
       <div class="copyright">

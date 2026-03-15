@@ -48,8 +48,10 @@ services:
       - coffee-net
     ports:
       - "80:80"
+      - "443:443" # Add port 443 for HTTPS
     volumes:
-      - ./frontend:/usr/share/nginx/html # Link your local files to Nginx
+      - ./frontend:/usr/share/nginx/html
+      - /etc/letsencrypt:/etc/letsencrypt:ro # Mount certs as read-only
     depends_on:
       - backend
 

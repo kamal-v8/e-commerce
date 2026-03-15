@@ -145,16 +145,19 @@ export function renderProductDetail(products) {
   document.getElementById('add-to-cart-btn').onclick = () => addToCart(p.id, parseInt(input.value));
 }
 
-export function renderCheckout(products) {
-  const summary = document.getElementById('checkout-summary');
-  if (!summary) return;
-  const cart = getCart();
-  let total = 0;
-  const itemsHtml = cart.map(item => {
-    const p = products.find(prod => prod.id === item.id);
-    if (!p) return '';
-    total += p.price * item.quantity;
-    return `<div><span>${p.name} x ${item.quantity}</span><span>$${(p.price * item.quantity).toFixed(2)}</span></div>`;
-  }).join('');
-  summary.innerHTML = `<h3>Summary</h3>${itemsHtml}<hr><div><strong>Total: $${total.toFixed(2)}</strong></div>`;
+export function setupFooter() {
+  const form = document.getElementById('subscribe-form');
+  const msg = document.getElementById('subscribe-msg');
+  if (!form) return;
+
+  form.onsubmit = (e) => {
+    e.preventDefault();
+    const email = document.getElementById('subscribe-email').value;
+    console.log("Subscribed:", email);
+    
+    msg.textContent = "Thanks for subscribing!";
+    msg.style.display = "block";
+    msg.style.color = "#4CAF50";
+    form.reset();
+  };
 }
