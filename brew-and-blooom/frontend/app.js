@@ -29,7 +29,7 @@ async function init() {
 
   // Filter listener
   document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.onclick = () => renderProductGrid(products, btn.innerText);
+    btn.onclick = () => renderProductGrid(products, btn.innerText.trim());
   });
 
   // Auth Status (Fixed)
