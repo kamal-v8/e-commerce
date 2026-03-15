@@ -47,7 +47,7 @@ services:
     networks:
       - coffee-net
     ports:
-      - "80:80"
+      - "8080:80"
       - "443:443" # Add port 443 for HTTPS
     volumes:
       - ./frontend:/usr/share/nginx/html
@@ -67,9 +67,9 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus_data:/prometheus
     command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--storage.tsdb.retention.time=15d'
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=15d"
 
   grafana:
     image: grafana/grafana:latest
@@ -99,9 +99,9 @@ services:
       - /sys:/host/sys:ro
       - /:/rootfs:ro
     command:
-      - '--path.procfs=/host/proc'
-      - '--path.sysfs=/host/sys'
-      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - "--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)"
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
