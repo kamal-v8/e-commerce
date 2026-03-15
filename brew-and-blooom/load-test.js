@@ -37,7 +37,11 @@ export default function () {
   check(checkoutRes, {
     'checkout status is 200': (r) => r.status === 200,
     'checkout successful': (r) => r.json().message.includes('successfully processed'),
+
+
   });
 
   sleep(1);
+
+
 }
