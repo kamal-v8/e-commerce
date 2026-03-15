@@ -47,7 +47,7 @@ services:
     networks:
       - coffee-net
     ports:
-      - "8081:80"
+      - "80:80"
     volumes:
       - ./frontend:/usr/share/nginx/html # Link your local files to Nginx
     depends_on:
