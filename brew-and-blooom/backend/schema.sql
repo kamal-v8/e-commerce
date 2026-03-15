@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS products (
 INSERT INTO products (name, price, category, image, description)
 VALUES 
 ('Ethiopian Yirgacheffe', 18.90, 'Light Roast', 'assets/coffee-product-1.jpg', 'Bright, floral coffee with notes of jasmine and lemon.'),
-('Colombian Supremo', 16.50, 'Medium Roast', 'assets/coffee-product-2.jpg', 'Balanced and smooth with a nutty sweetness and caramel finish.'),
-('Sumatra Mandheling', 19.00, 'Dark Roast', 'assets/coffee-product-3.jpg', 'Full-bodied and earthy with low acidity.'),
-('Espresso Blend', 20.00, 'Dark Roast', 'assets/coffee-product-4.jpg', 'Rich crema and intense flavor. Perfect for espresso machines.')
+('Espresso Mandheling', 19.00, 'Medium Roast', 'assets/coffee-product-3.jpg', 'Full-bodied and earthy with low acidity.'),
+('Colombian Supremo', 16.50, 'Dark Roast', 'assets/coffee-product-2.jpg', 'Balanced and smooth with a nutty sweetness and caramel finish.'),
+('Sumatra Blend', 20.00, 'Dark Roast', 'assets/coffee-product-4.jpg', 'Rich crema and intense flavor. Perfect for espresso machines.')
 ON CONFLICT DO NOTHING;

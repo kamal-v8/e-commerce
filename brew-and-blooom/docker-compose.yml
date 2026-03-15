@@ -26,6 +26,10 @@ services:
       - coffee-net
     ports:
       - "3000:3000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    command: npm run dev # Use nodemon for development
     environment:
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
@@ -44,6 +48,8 @@ services:
       - coffee-net
     ports:
       - "8081:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html # Link your local files to Nginx
     depends_on:
       - backend
 
