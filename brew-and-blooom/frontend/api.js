@@ -1,6 +1,3 @@
-// Dynamic BASE_URL: 
-// In development (local), we use http://localhost:3000
-// In production (EC2), we use a relative path /api and let Nginx handle the routing
 const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 const BASE_URL = isLocal ? 'http://localhost:3000/api' : '/api';
 
