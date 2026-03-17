@@ -145,6 +145,13 @@ export function renderProductDetail(products) {
   document.getElementById('add-to-cart-btn').onclick = () => addToCart(p.id, parseInt(input.value));
 }
 
+export function renderCheckout(products) {
+  const container = document.getElementById('checkout-container');
+  if (!container) return;
+  // Placeholder implementation for checkout
+  container.innerHTML = '<h2>Checkout</h2><p>Checkout functionality is coming soon.</p>';
+}
+
 export function setupFooter() {
   const form = document.getElementById('subscribe-form');
   const msg = document.getElementById('subscribe-msg');
