@@ -10,6 +10,10 @@ async function init() {
     products = rawProducts.map(p => ({ ...p, price: parseFloat(p.price) }));
   } catch (err) {
     console.error("API error", err);
+    const grids = document.querySelectorAll('.products-grid');
+    grids.forEach(grid => {
+      grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: red;">Failed to load products. Error: ${err.message}</p>`;
+    });
   }
 
   // 2. Initial Render
