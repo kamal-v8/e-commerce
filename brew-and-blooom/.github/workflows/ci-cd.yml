@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: backend
+        working-directory: brew-and-blooom/backend
 
     steps:
       - name: Checkout Code
@@ -26,6 +26,7 @@ jobs:
         with:
           node-version: "20"
           cache: "npm"
+          cache-dependency-path: brew-and-blooom/backend/package-lock.json
 
       - name: Install Dependencies
         run: npm install

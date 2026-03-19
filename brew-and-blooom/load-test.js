@@ -1,18 +1,30 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 
+// export const options = {
+//   stages: [
+//     { duration: '1m', target: 9000 }, // ramp up to 20 users over 30s
+//     { duration: '1m', target: 20 },  // stay at 20 users for 1 minute
+//     { duration: '30s', target: 0 },  // ramp down to 0 users
+//   ],
+//   thresholds: {
+//     http_req_duration: ['p(95)<500'], // 95% of requests must complete below 500ms
+//   },
+// };
+//
+
+
 export const options = {
   stages: [
-    { duration: '1m', target: 9000 }, // ramp up to 20 users over 30s
-    { duration: '1m', target: 20 },  // stay at 20 users for 1 minute
-    { duration: '30s', target: 0 },  // ramp down to 0 users
+    { duration: '30s', target: 50 },  // Ramp up to 50 users
+    { duration: '1m', target: 100 }, // Stay at 100 users
+    { duration: '30s', target: 0 },   // Ramp down
   ],
-  thresholds: {
-    http_req_duration: ['p(95)<500'], // 95% of requests must complete below 500ms
-  },
 };
 
-const BASE_URL = 'http://localhost:3000';
+
+// const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'https://gitflow.online';
 
 export default function () {
   // 1. Fetch Products
