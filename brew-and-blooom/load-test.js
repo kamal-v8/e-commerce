@@ -24,7 +24,7 @@ export const options = {
 //
 
 // const BASE_URL = 'http://localhost:3000';
-const BASE_URL = 'https://gitflow.online';
+const BASE_URL = 'https://zaptor.in';
 
 export default function () {
   // 1. Fetch Products
