@@ -14,10 +14,10 @@ export const options = {
   },
 };
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'https://zaptor.in';
 
 export default function () {
-  const res = http.get(`${BASE_URL}/api/products`);
+  const res = http.get(`${BASE_URL}/shop`);
 
   // Log every 100th request locally in k6 just to verify it's working
   if (__ITER % 100 === 0) {
