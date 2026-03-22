@@ -13,7 +13,7 @@ export function renderProductGrid(products, category = 'All') {
 
   let itemsToDisplay = category === 'All' 
     ? products 
-    : products.filter(p => p.category === category);
+    : products.filter(p => p.category && p.category.toLowerCase().includes(category.toLowerCase()));
 
   if (grid.dataset.limit) {
     itemsToDisplay = itemsToDisplay.slice(0, parseInt(grid.dataset.limit));

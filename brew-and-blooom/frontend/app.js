@@ -37,13 +37,24 @@ async function init() {
   });
 
   // Auth Status (Fixed)
+  // const user = getUser();
+  // const authLink = document.getElementById('auth-link');
+  // if (user && authLink) {
+  //   authLink.textContent = `Hi, ${user.name}`;
+  //   authLink.onclick = (e) => { 
+  //     e.preventDefault(); 
+  //     if (confirm('Logout?')) logout(); 
+  //   };
+  // }
+
+  // Auth Status (Fixed)
   const user = getUser();
   const authLink = document.getElementById('auth-link');
   if (user && authLink) {
     authLink.textContent = `Hi, ${user.name}`;
-    authLink.onclick = (e) => { 
-      e.preventDefault(); 
-      if (confirm('Logout?')) logout(); 
+    authLink.onclick = (e) => {
+      e.preventDefault();
+      if (confirm('Logout?')) logout();
     };
   }
 
