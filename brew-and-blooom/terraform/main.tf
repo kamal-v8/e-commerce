@@ -104,6 +104,14 @@ resource "aws_security_group" "ec2_sg" {
     # ipv6_cidr_blocks = ["${var.my_ip}/128"]
     description = "grafana port open"
   }
+  ingress {
+    from_port   = 3300
+    to_port     = 3300
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    # ipv6_cidr_blocks = ["${var.my_ip}/128"]
+    description = "SmartRoads port open"
+  }
   egress {
     from_port   = 0
     to_port     = 0

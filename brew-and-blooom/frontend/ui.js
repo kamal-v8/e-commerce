@@ -146,10 +146,45 @@ export function renderProductDetail(products) {
 }
 
 export function renderCheckout(products) {
-  const container = document.getElementById('checkout-container');
-  if (!container) return;
-  // Placeholder implementation for checkout
-  container.innerHTML = '<h2>Checkout</h2><p>Checkout functionality is coming soon.</p>';
+  const summaryContainer = document.getElementById('checkout-summary');
+  if (!summaryContainer) return;
+
+  const cart = getCart();
+  if (cart.length === 0) {
+    summaryContainer.innerHTML = '<p>Your cart is empty.</p>';
+    return;
+  }
+
+  let subtotal = 0;
+  const itemsHtml = cart.map(item => {
+    const p = products.find(prod => prod.id === item.id);
+    if (!p) return '';
+    const total = p.price * item.quantity;
+    subtotal += total;
+    return `
+      <div class="summary-row" style="font-size: 0.9rem; margin-bottom: 0.5rem;">
+        <span>${p.name} x ${item.quantity}</span>
+        <span>$${total.toFixed(2)}</span>
+      </div>
+    `;
+  }).join('');
+
+  const tax = subtotal * 0.08; // 8% tax
+  const total = subtotal + tax;
+
+  summaryContainer.innerHTML = `
+    <h3 style="margin-bottom: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">Order Summary</h3>
+    <div style="max-height: 200px; overflow-y: auto; margin-bottom: 1.5rem; border-bottom: 1px solid #eee;">
+      ${itemsHtml}
+    </div>
+    <div class="summary-row"><span>Subtotal</span><span>$${subtotal.toFixed(2)}</span></div>
+    <div class="summary-row"><span>Tax (8%)</span><span>$${tax.toFixed(2)}</span></div>
+    <div class="summary-row"><span>Shipping</span><span style="color: #4CAF50; font-weight: 600;">FREE</span></div>
+    <div class="total-row summary-row" style="margin-top: 1rem; padding-top: 1rem; border-top: 2px solid var(--primary);">
+      <span>Total</span>
+      <span>$${total.toFixed(2)}</span>
+    </div>
+  `;
 }
 
 export function setupFooter() {

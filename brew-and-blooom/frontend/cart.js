@@ -47,7 +47,7 @@ export function updateQuantity(productId, newQuantity) {
 }
 
 export function clearCart() {
-  localStorage.removeItem(CART_KEY);
+  saveCart([]);
 }
 
 export function getUser() {

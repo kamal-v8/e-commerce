@@ -89,6 +89,53 @@ async function init() {
       } catch (err) { alert('Registration Failed'); }
     };
   }
+
+  // Checkout Form
+  const checkoutForm = document.getElementById('checkout-form');
+  if (checkoutForm) {
+    const cart = getCart();
+    if (cart.length === 0) {
+      alert("Your cart is empty. Please add items before checking out.");
+      window.location.href = '/shop';
+      return;
+    }
+
+    checkoutForm.onsubmit = async (e) => {
+      e.preventDefault();
+      const submitBtn = checkoutForm.querySelector('button[type="submit"]');
+      const originalBtnText = submitBtn.textContent;
+      
+      const orderData = {
+        customer: {
+          name: document.getElementById('name').value,
+          address: document.getElementById('address').value,
+          city: document.getElementById('city').value,
+          zip: document.getElementById('zip').value,
+        },
+        items: cart,
+        total: products.reduce((sum, p) => {
+          const item = cart.find(i => i.id === p.id);
+          return item ? sum + (p.price * item.quantity) : sum;
+        }, 0) * 1.08 // Include the tax logic matching UI
+      };
+
+      try {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Processing Order...';
+        
+        await submitOrder(orderData);
+        
+        // Success Logic
+        clearCart();
+        alert('Thank you for your order! It has been successfully placed.');
+        window.location.href = '/';
+      } catch (err) {
+        alert('Checkout Failed: ' + err.message);
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
+      }
+    };
+  }
 }
 
 document.addEventListener('DOMContentLoaded', init);
