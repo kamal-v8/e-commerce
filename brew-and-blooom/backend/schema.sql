@@ -53,7 +53,6 @@ INSERT INTO products (name, price, category, image, description)
 SELECT 'Golden Harvest', 18.50, 'Medium Roast', 'assets/coffee-product-7.jpg', 'Rich and buttery with a sweet caramel aroma and maple notes.'
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Golden Harvest');
 
-=======
 SELECT 'Rozali Colombian Supremo', 16.50, 'Dark Roast', 'assets/coffee-w8.jpg', 'Balanced and smooth with a nutty sweetness and caramel finish.'
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Rozali Colombian Supremo');
 
@@ -71,4 +70,3 @@ WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Golden Harvest');
 
 
 
->>>>>>> 00f6001 (improved the frontend significantly)
