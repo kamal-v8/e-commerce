@@ -13,43 +13,40 @@ CREATE TABLE IF NOT EXISTS products (
     name VARCHAR(100) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     category VARCHAR(50),
-    image TEXT,
-    description TEXT
+    image VARCHAR(255),
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Seed Initial Products (Using INSERT INTO ... SELECT for robust seeding)
+-- Seed Products (using local coffee-wX.jpg naming)
 INSERT INTO products (name, price, category, image, description)
-SELECT 'Luna Yirgacheffe', 18.90, 'Light Roast', 'assets/coffee-w2.jpg', 'Bright, floral coffee with notes of jasmine and lemon.'
+SELECT 'Ethiopian Yirgacheffe', 18.90, 'Light Roast', 'assets/coffee-w1.jpg', 'Bright, floral coffee with notes of jasmine and lemon.'
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Ethiopian Yirgacheffe');
 
 INSERT INTO products (name, price, category, image, description)
 SELECT 'Espresso Mandheling', 19.00, 'Medium Roast', 'assets/coffee-w3.jpg', 'Full-bodied and earthy with low acidity.'
-WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Simple Espresso Mandheling');
+WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Espresso Mandheling');
 
 INSERT INTO products (name, price, category, image, description)
-SELECT 'Sun-Drenched Sidamo', 22.00, 'DARK Roast', 'assets/coffee-w9.jpg', 'Authentic Ethiopian heirloom with complex jasmine and tea-like notes.'
-WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Sun-Drenched Sidamo');
-
+SELECT 'Colombian Supremo', 16.50, 'Dark Roast', 'assets/coffee-w2.jpg', 'Balanced and smooth with a nutty sweetness and caramel finish.'
+WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Colombian Supremo');
 
 INSERT INTO products (name, price, category, image, description)
-SELECT 'Sumatra Blend ', 10.00, 'Dark Roast', 'assets/coffee-w1.jpg', 'Rich crema and intense flavored Coffee.' 
+SELECT 'Sumatra Blend', 20.00, 'Dark Roast', 'assets/coffee-w4.jpg', 'Rich crema and intense flavor. Perfect for espresso machines.'
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Sumatra Blend');
 
 INSERT INTO products (name, price, category, image, description)
-SELECT 'Rozali Colombian Supremo', 16.50, 'Dark Roast', 'assets/coffee-w8.jpg', 'Balanced and smooth with a nutty sweetness and caramel finish.'
-WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Rozali Colombian Supremo');
-
-INSERT INTO products (name, price, category, image, description)
-SELECT 'Morning Dew Arabica', 14.90, 'Light Roast', 'assets/coffee-w6.jpg', 'Bright and crisp with a citrus zest and honeyed finish.'
+SELECT 'Morning Dew Arabica', 14.90, 'Medium Roast', 'assets/coffee-w5.jpg', 'Bright and crisp with a citrus zest and honeyed finish.'
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Morning Dew Arabica');
 
 INSERT INTO products (name, price, category, image, description)
-SELECT 'Ethiopian Roasted Orchid', 17.50, 'Medium-Dark', 'assets/coffee-w10.jpg', 'A bold, aromatic blend featuring spicy undertones and a silky finish.'
-WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Ethiopian Roasted Orchid');
+SELECT 'Sun-Drenched Sidamo', 22.00, 'DARK Roast', 'assets/coffee-w6.jpg', 'Authentic Ethiopian heirloom with complex jasmine and tea-like notes.'
+WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Sun-Drenched Sidamo');
 
 INSERT INTO products (name, price, category, image, description)
-SELECT 'Golden Harvest', 18.50, 'Medium Roast', 'assets/coffee-w7.jpg', 'Rich and buttery with a sweet caramel aroma and maple notes.'
+SELECT 'Roasted Orchid', 17.50, 'Medium-Dark', 'assets/coffee-w7.jpg', 'A bold, aromatic blend featuring spicy undertones and a silky finish.'
+WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Roasted Orchid');
+
+INSERT INTO products (name, price, category, image, description)
+SELECT 'Golden Harvest', 18.50, 'Medium Roast', 'assets/coffee-w8.jpg', 'Rich and buttery with a sweet caramel aroma and maple notes.'
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Golden Harvest');
-
-
-
