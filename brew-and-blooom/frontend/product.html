@@ -6,10 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product Details | Brew & Bloom</title>
   <link rel="stylesheet" href="style.css">
-  <!-- <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"> -->
 </head>
-<body>
+<body class="product-page">
 
+  <!-- Header -->
   <header>
     <div class="container">
       <nav>
@@ -23,7 +23,7 @@
         </ul>
         <div class="nav-icons">
           <a href="/cart" class="cart-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
             <span class="cart-count">0</span>
           </a>
         </div>
@@ -31,61 +31,66 @@
     </div>
   </header>
 
-  <section>
-    <div id="product-detail" class="container product-detail">
-      <!-- Product details injected here -->
-      <p>Loading...</p>
+  <main class="product-detail-wrapper">
+    <div class="container">
+        <!-- Breadcrumbs -->
+        <nav class="breadcrumbs">
+            <a href="/">Home</a> / <a href="/shop">Shop</a> / <span id="breadcrumb-current">Product</span>
+        </nav>
+
+        <div id="product-detail" class="modern-product-layout">
+            <!-- Dynamic Content Injected via ui.js -->
+            <div class="loading-placeholder">
+                <div class="shimmer-img"></div>
+                <div class="shimmer-text"></div>
+            </div>
+        </div>
     </div>
+  </main>
+
+  <!-- Product Story/Specs Section -->
+  <section class="product-specs-section">
+      <div class="container">
+          <div class="specs-grid">
+              <div class="spec-item">
+                  <span class="spec-label">Roast Level</span>
+                  <div class="roast-meter">
+                      <div class="meter-bar"><div class="meter-fill" id="spec-roast-fill" style="width: 60%;"></div></div>
+                      <span id="spec-roast-text">Medium</span>
+                  </div>
+              </div>
+              <div class="spec-item">
+                  <span class="spec-label">Altitude</span>
+                  <span class="spec-value" id="spec-altitude">1,800 - 2,200m</span>
+              </div>
+              <div class="spec-item">
+                  <span class="spec-label">Process</span>
+                  <span class="spec-value" id="spec-process">Washed</span>
+              </div>
+              <div class="spec-item">
+                  <span class="spec-label">Body</span>
+                  <span class="spec-value" id="spec-body">Syrupy & Full</span>
+              </div>
+          </div>
+      </div>
   </section>
 
-  <section class="related-products">
+  <!-- Related Products -->
+  <section class="related-products-modern">
     <div class="container">
-      <h2 class="section-title">You Might Also Like</h2>
-      <div class="products-grid">
-  Could be injected or static placeholders
-        <article class="product-card">
-            <a href="/product?id=1" class="product-image">
-  <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80" alt="Ethiopian Yirgacheffe">
-            </a>
-            <div class="product-info">
-  <h3 class="product-title"><a href="/product?id=1">Ethiopian Yirgacheffe</a></h3>
-              <p class="product-price">$19.00</p>
-              <div class="product-actions">
-                <a href="/product?id=1" class="btn btn-sm btn-outline">View</a>
-                <button onclick="addToCart(1, 1)" class="btn btn-sm">Add</button>
-              </div>
-            </div>
-        </article>
-        <article class="product-card">
-            <a href="/product?id=2" class="product-image">
-              <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80" alt="Colombian Supremo">
-            </a>
-            <div class="product-info">
-              <h3 class="product-title"><a href="/product?id=2">Colombian Supremo</a></h3>
-              <p class="product-price">$16.50</p>
-              <div class="product-actions">
-                <a href="/product?id=2" class="btn btn-sm btn-outline">View</a>
-                <button onclick="addToCart(2, 1)" class="btn btn-sm">Add</button>
-              </div>
-            </div>
-        </article>
-        <article class="product-card">
-            <a href="/product?id=3" class="product-image">
-                <img src="https://images.unsplash.com/photo-1512568400610-62da28bc8a13?auto=format&fit=crop&w=800&q=80" alt="Sumatra Mandheling">
-            </a>
-            <div class="product-info">
-                <h3 class="product-title"><a href="/product?id=3">Sumatra Mandheling</a></h3>
-                <p class="product-price">$19.00</p>
-                <div class="product-actions">
-                <a href="/product?id=3" class="btn btn-sm btn-outline">View</a>
-                <button onclick="addToCart(3, 1)" class="btn btn-sm">Add</button>
-                </div>
-            </div>
-        </article>
+      <div class="section-header-row">
+          <h2 class="section-heading">You Might Also Like</h2>
+          <a href="/shop" class="btn btn-sm btn-outline">Explore More </a>
+
+      </div>
+
+
+      <div class="products-grid modern-grid" id="related-products-grid">
+          <!-- Injected via ui.js -->
       </div>
     </div>
   </section>
-  <!---->
+
   <!-- Footer -->
   <footer>
     <div class="container">
@@ -95,24 +100,16 @@
           <p>Crafting moments of joy, one cup at a time.</p>
         </div>
         <div class="footer-col">
-          <h3>Shop</h3>
-          <ul>
-            <li><a href="/shop">All Coffee</a></li>
-            <li><a href="/shop">Subscriptions</a></li>
-            <li><a href="/shop">Equipment</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h3>Support</h3>
-          <ul>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">Shipping</a></li>
-            <li><a href="#">Returns</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
           <h3>Stay Connected</h3>
+<<<<<<< HEAD
           <p>Subscribe for updates and offers.</p>
+=======
+          <p>Subscribe for brewing tips and new arrivals.</p>
+          <div class="newsletter-mini">
+              <input type="email" placeholder="Email Address">
+              <button>&rarr;</button>
+          </div>
+>>>>>>> 00f6001 (improved the frontend significantly)
         </div>
       </div>
       <div class="copyright">
@@ -120,7 +117,6 @@
       </div>
     </div>
   </footer>
-
 
   <script type="module" src="app.js"></script>
 </body>

@@ -3,6 +3,7 @@ import { getUser, logout, getCart, clearCart, saveUser } from './cart.js';
 import { updateCartBadge, renderProductGrid, renderProductDetail, renderCartPage, renderCheckout, setupFooter } from './ui.js';
 
 async function init() {
+  console.log("init() starting...");
   // 1. Initial Logic
   let products = [];
   try {
@@ -28,12 +29,47 @@ async function init() {
   updateCartBadge();
   setupFooter();
 
+  try {
+    console.log("Starting initial renders...");
+    // Target any product grid variant (Home/Shop/Modern)
+    const grid = document.querySelector('.products-grid, .modern-products-grid, .modern-grid, #shop-products-grid');
+    if (grid) renderProductGrid(products);
+
+    renderProductDetail(products);
+    renderCartPage(products);
+    renderCheckout(products);
+    updateCartBadge();
+    setupFooter();
+    console.log("Renders complete.");
+  } catch (err) {
+    console.error("Error during initial render:", err);
+  }
   // 3. Setup Listeners
   document.addEventListener('cartUpdated', updateCartBadge);
 
   // Filter listener
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.onclick = () => renderProductGrid(products, btn.innerText);
+  });
+  // Sticky Header Logic
+  window.onscroll = () => {
+    const header = document.querySelector('.main-header');
+    if (header) {
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    }
+  };
+
+  // Filter listener (Modern & Standard)
+  const filterElements = document.querySelectorAll('.filter-pill, .filter-btn');
+  filterElements.forEach(btn => {
+    btn.onclick = () => {
+      const category = btn.dataset.category || btn.innerText.trim();
+      renderProductGrid(products, category);
+
+      // Update active state
+      filterElements.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    };
   });
 
   // Auth Status (Fixed)
@@ -104,7 +140,7 @@ async function init() {
       e.preventDefault();
       const submitBtn = checkoutForm.querySelector('button[type="submit"]');
       const originalBtnText = submitBtn.textContent;
-      
+
       const orderData = {
         customer: {
           name: document.getElementById('name').value,
@@ -122,13 +158,63 @@ async function init() {
       try {
         submitBtn.disabled = true;
         submitBtn.textContent = 'Processing Order...';
-        
+
         await submitOrder(orderData);
-        
+
         // Success Logic
         clearCart();
         alert('Thank you for your order! It has been successfully placed.');
         window.location.href = '/';
+      } catch (err) {
+        alert('Checkout Failed: ' + err.message);
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
+      }
+    };
+  }
+
+  // Checkout Form
+  const checkoutForm = document.getElementById('checkout-form');
+  if (checkoutForm) {
+    const cart = getCart();
+    if (cart.length === 0) {
+      alert("Your cart is empty. Please add items before checking out.");
+      window.location.href = '/shop';
+      return;
+    }
+
+    checkoutForm.onsubmit = async (e) => {
+      e.preventDefault();
+      const submitBtn = document.getElementById('place-order-btn');
+      const originalBtnText = submitBtn.textContent;
+
+      const orderData = {
+        customer: {
+          email: document.getElementById('email').value,
+          firstName: document.getElementById('first-name').value,
+          lastName: document.getElementById('last-name').value,
+          address: document.getElementById('address').value,
+          city: document.getElementById('city').value,
+          zip: document.getElementById('zip').value,
+        },
+        items: cart,
+        payment: {
+          cardNumber: document.getElementById('card-number').value,
+          expiry: document.getElementById('expiry').value,
+          cvv: document.getElementById('cvv').value,
+        }
+      };
+
+      try {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Processing...';
+
+        await submitOrder(orderData);
+
+        // Success Logic
+        clearCart();
+        const modal = document.getElementById('success-modal');
+        if (modal) modal.style.display = 'flex';
       } catch (err) {
         alert('Checkout Failed: ' + err.message);
         submitBtn.disabled = false;

@@ -4,11 +4,10 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shop | Brew & Bloom</title>
+  <title>The Coffee Gallery | Brew & Bloom</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="shop-page">
 
   <!-- Header -->
   <header>
@@ -24,7 +23,7 @@
         </ul>
         <div class="nav-icons">
           <a href="/cart" class="cart-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
             <span class="cart-count">0</span>
           </a>
         </div>
@@ -47,8 +46,29 @@
       <div class="products-grid">
         <!-- Products will be injected here by app.js -->
       </div>
+  <main class="container">
+    <div class="shop-header">
+        <div class="shop-title-area">
+            <span class="eyebrow">Artisan Collection</span>
+            <h1 class="page-title">The Coffee Gallery</h1>
+        </div>
+        <div class="shop-controls">
+            <div class="filter-pills">
+                <button class="filter-pill active" data-category="All">All Roasts</button>
+                <button class="filter-pill" data-category="Light Roast">Light</button>
+                <button class="filter-pill" data-category="Medium Roast">Medium</button>
+                <button class="filter-pill" data-category="Dark Roast">Dark</button>
+            </div>
+        </div>
     </div>
-  </section>
+
+    <div class="products-grid-wrapper">
+        <div id="shop-products-grid" class="modern-products-grid">
+            <!-- Injected via ui.js -->
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+  </main>
 
   <!-- Footer -->
   <footer>
@@ -77,6 +97,10 @@
         <div class="footer-col">
           <h3>Stay Connected</h3>
           <p>Subscribe for updates and offers.</p>
+          <div class="newsletter-mini">
+              <!-- <input type="email" placeholder="Email Address"> -->
+              <!-- <button>&rarr;</button> -->
+          </div>
         </div>
       </div>
       <div class="copyright">
@@ -85,7 +109,6 @@
     </div>
   </footer>
 
-  
   <script type="module" src="app.js"></script>
 </body>
 </html>
