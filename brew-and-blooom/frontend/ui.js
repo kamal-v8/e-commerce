@@ -237,14 +237,6 @@ export function renderProductDetail(products) {
 }
 
 export function renderCheckout(products) {
-<<<<<<< HEAD
-  const summaryContainer = document.getElementById('checkout-summary');
-  if (!summaryContainer) return;
-
-  const cart = getCart();
-  if (cart.length === 0) {
-    summaryContainer.innerHTML = '<p>Your cart is empty.</p>';
-=======
   const itemsContainer = document.getElementById('checkout-items-list');
   const totalsContainer = document.getElementById('checkout-totals');
   if (!itemsContainer || !totalsContainer) return;
@@ -252,26 +244,16 @@ export function renderCheckout(products) {
   const cart = getCart();
   if (cart.length === 0) {
     itemsContainer.innerHTML = '<p>Your cart is empty.</p>';
->>>>>>> 00f6001 (improved the frontend significantly)
     return;
   }
 
   let subtotal = 0;
-<<<<<<< HEAD
-  const itemsHtml = cart.map(item => {
-=======
   itemsContainer.innerHTML = cart.map(item => {
->>>>>>> 00f6001 (improved the frontend significantly)
     const p = products.find(prod => prod.id === item.id);
     if (!p) return '';
     const total = p.price * item.quantity;
     subtotal += total;
     return `
-<<<<<<< HEAD
-      <div class="summary-row" style="font-size: 0.9rem; margin-bottom: 0.5rem;">
-        <span>${p.name} x ${item.quantity}</span>
-        <span>$${total.toFixed(2)}</span>
-=======
       <div class="summary-item-row">
         <img src="${p.image}" class="summary-item-img">
         <div class="summary-item-info">
@@ -279,28 +261,10 @@ export function renderCheckout(products) {
           <p>Qty: ${item.quantity}</p>
         </div>
         <span class="price">$${total.toFixed(2)}</span>
->>>>>>> 00f6001 (improved the frontend significantly)
       </div>
     `;
   }).join('');
 
-<<<<<<< HEAD
-  const tax = subtotal * 0.08; // 8% tax
-  const total = subtotal + tax;
-
-  summaryContainer.innerHTML = `
-    <h3 style="margin-bottom: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">Order Summary</h3>
-    <div style="max-height: 200px; overflow-y: auto; margin-bottom: 1.5rem; border-bottom: 1px solid #eee;">
-      ${itemsHtml}
-    </div>
-    <div class="summary-row"><span>Subtotal</span><span>$${subtotal.toFixed(2)}</span></div>
-    <div class="summary-row"><span>Tax (8%)</span><span>$${tax.toFixed(2)}</span></div>
-    <div class="summary-row"><span>Shipping</span><span style="color: #4CAF50; font-weight: 600;">FREE</span></div>
-    <div class="total-row summary-row" style="margin-top: 1rem; padding-top: 1rem; border-top: 2px solid var(--primary);">
-      <span>Total</span>
-      <span>$${total.toFixed(2)}</span>
-    </div>
-=======
   const shipping = 0;
   const tax = subtotal * 0.08;
   const total = subtotal + shipping + tax;
@@ -310,7 +274,6 @@ export function renderCheckout(products) {
     <div class="row"><span>Shipping</span><span>$${shipping.toFixed(2)}</span></div>
     <div class="row"><span>Estimated Tax</span><span>$${tax.toFixed(2)}</span></div>
     <div class="row total"><span>Total</span><span>$${total.toFixed(2)}</span></div>
->>>>>>> 00f6001 (improved the frontend significantly)
   `;
 }
 
