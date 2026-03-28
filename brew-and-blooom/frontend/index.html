@@ -1,18 +1,19 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Brew & Bloom | Artisan Coffee</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="home-page">
 
+  <!-- Header -->
   <header>
     <div class="container">
       <nav>
         <a href="/" class="logo">Brew & Bloom</a>
-        <div class="menu-toggle">
-          <span>&#9776;</span>
-        </div>
+        <div class="menu-toggle"><span>&#9776;</span></div>
         <ul class="nav-links">
           <li><a href="/" class="active">Home</a></li>
           <li><a href="/shop">Shop</a></li>
@@ -29,29 +30,51 @@
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Experience the Perfect Brew</h1>
-      <p>Ethically sourced, expertly roasted, and delivered fresh to your door.</p>
-      <a href="/shop" class="btn">Shop Now</a>
-      <a href="/about" class="btn btn-secondary">Our Story</a>
+  <!-- Simple Modern Hero -->
+  <section class="hero-simple">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Exceptional Coffee <br>For Every Morning</h1>
+        <p>Ethically sourced, small-batch roasted, and delivered fresh to your doorstep.</p>
+        <div class="hero-actions">
+          <a href="/shop" class="btn">Shop All Coffee</a>
+          <a href="/about" class="btn btn-outline">Our Story</a>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Featured Products -->
-  <section class="featured">
+  <section class="featured-section">
     <div class="container">
-      <h2 class="section-title">Featured Roasts</h2>
+      <div class="section-header">
+        <h2>Featured Roasts</h2>
+        <p>Our current favorite micro-lot releases.</p>
+      </div>
+      
       <div class="products-grid" data-limit="4">
         <!-- Products will be injected here by app.js -->
-      </div>
-      <div style="text-align: center; margin-top: 3rem;">
-        <a href="/shop" class="btn btn-outline">View All Coffees</a>
+        <p class="loading-text">Loading fresh roasts...</p>
       </div>
     </div>
   </section>
 
+  <!-- Simple Newsletter -->
+  <section class="newsletter-simple">
+    <div class="container">
+      <div class="newsletter-box">
+        <h3>Join the Club</h3>
+        <p>Get brewing tips and 10% off your first order.</p>
+        <form id="subscribe-form" class="simple-form">
+          <input type="email" id="subscribe-email" placeholder="Email Address" required>
+          <button type="submit" class="btn">Join</button>
+        </form>
+        <p id="subscribe-msg" class="msg-success"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
   <footer>
     <div class="container">
       <div class="footer-grid">
@@ -60,21 +83,20 @@
           <p>Crafting moments of joy, one cup at a time.</p>
         </div>
         <div class="footer-col">
-          <h3>Support</h3>
+          <h3>Explore</h3>
           <ul>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">Shipping</a></li>
-            <li><a href="#">Returns</a></li>
+            <li><a href="/shop">Shop All</a></li>
+            <li><a href="/about">Our Story</a></li>
+            <li><a href="/auth">My Account</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h3>Stay Connected</h3>
-          <p>Subscribe for updates and offers.</p>
-          <form id="subscribe-form" style="display: flex; gap: 5px; margin-top: 0.5rem;">
-            <input type="email" id="subscribe-email" placeholder="Email Address" required style="padding: 0.5rem; flex-grow: 1;">
-            <button type="submit" class="btn btn-sm" style="padding: 0.5rem 1rem;">Go</button>
-          </form>
-          <p id="subscribe-msg" style="font-size: 0.8rem; margin-top: 5px; display: none;"></p>
+          <h3>Help</h3>
+          <ul>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Contact: brew@email.com</a></li>
+          </ul>
         </div>
       </div>
       <div class="copyright">
