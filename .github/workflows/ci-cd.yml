@@ -29,7 +29,9 @@ jobs:
           cache-dependency-path: brew-and-blooom/backend/package-lock.json
 
       - name: Install Dependencies
-        run: npm install
+        run: |
+          npm install
+          npm audit fix
 
       - name: Run Tests
         run: npm test || echo "No tests found, but moving forward!"
