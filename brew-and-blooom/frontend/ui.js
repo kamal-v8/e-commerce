@@ -30,11 +30,11 @@ export function renderProductGrid(products, category = 'All') {
   grid.innerHTML = itemsToDisplay.map(product => `
     <article class="product-card">
       <a href="product.html?id=${product.id}" class="product-image">
-        <img src="${product.image}" alt="${product.name}">
+        <img src="${product.image}" alt="${product.name}" loading="lazy">
       </a>
       <div class="product-info">
         <h3><a href="product.html?id=${product.id}">${product.name}</a></h3>
-        <p class="product-price">$${product.price.toFixed(2)}</p>
+        <p class="product-price">₹${product.price.toFixed(2)}</p>
         <div class="product-actions">
           <a href="product.html?id=${product.id}" class="btn btn-sm btn-outline">View</a>
           <button class="btn btn-sm add-btn" data-id="${product.id}">Add</button>
@@ -99,8 +99,8 @@ export function renderCartPage(products) {
             </div>
         </div>
         <div class="cart-item-price-info">
-            <span class="unit-price">$${p.price.toFixed(2)} each</span>
-            <span class="total-price">$${total.toFixed(2)}</span>
+            <span class="unit-price">₹${p.price.toFixed(2)} each</span>
+            <span class="total-price">₹${total.toFixed(2)}</span>
         </div>
       </div>
     `;
@@ -114,15 +114,15 @@ export function renderCartPage(products) {
     <h3>Order Summary</h3>
     <div class="summary-line">
         <span>Subtotal</span>
-        <span>$${subtotal.toFixed(2)}</span>
+        <span>₹${subtotal.toFixed(2)}</span>
     </div>
     <div class="summary-line">
         <span>Shipping</span>
-        <span>$${shipping.toFixed(2)}</span>
+        <span>₹${shipping.toFixed(2)}</span>
     </div>
     <div class="summary-line total">
         <span>Total</span>
-        <span>$${total.toFixed(2)}</span>
+        <span>₹${total.toFixed(2)}</span>
     </div>
     <button class="checkout-btn-modern" onclick="window.location.href='/checkout'">Checkout Now</button>
     <p style="text-align: center; font-size: 0.8rem; margin-top: 1rem; opacity: 0.7;">Taxes calculated at checkout</p>
@@ -185,7 +185,7 @@ export function renderProductDetail(products) {
         <h1>${p.name}</h1>
         
         <div class="price-row">
-            <span class="current-price">$${p.price.toFixed(2)}</span>
+            <span class="current-price">₹${p.price.toFixed(2)}</span>
             <span class="stock-status"><span>●</span> In Stock & Ready to Ship</span>
         </div>
 
@@ -222,7 +222,7 @@ export function renderProductDetail(products) {
           </a>
           <div class="product-info">
             <h3><a href="product.html?id=${product.id}">${product.name}</a></h3>
-            <p class="product-price">$${product.price.toFixed(2)}</p>
+            <p class="product-price">₹${product.price.toFixed(2)}</p>
             <div class="product-actions">
               <button class="btn btn-sm add-btn" data-id="${product.id}">Add</button>
             </div>
@@ -260,7 +260,7 @@ export function renderCheckout(products) {
           <h4>${p.name}</h4>
           <p>Qty: ${item.quantity}</p>
         </div>
-        <span class="price">$${total.toFixed(2)}</span>
+        <span class="price">₹${total.toFixed(2)}</span>
       </div>
     `;
   }).join('');
@@ -270,10 +270,10 @@ export function renderCheckout(products) {
   const total = subtotal + shipping + tax;
 
   totalsContainer.innerHTML = `
-    <div class="row"><span>Subtotal</span><span>$${subtotal.toFixed(2)}</span></div>
-    <div class="row"><span>Shipping</span><span>$${shipping.toFixed(2)}</span></div>
-    <div class="row"><span>Estimated Tax</span><span>$${tax.toFixed(2)}</span></div>
-    <div class="row total"><span>Total</span><span>$${total.toFixed(2)}</span></div>
+    <div class="row"><span>Subtotal</span><span>₹${subtotal.toFixed(2)}</span></div>
+    <div class="row"><span>Shipping</span><span>₹${shipping.toFixed(2)}</span></div>
+    <div class="row"><span>Estimated Tax</span><span>₹${tax.toFixed(2)}</span></div>
+    <div class="row total"><span>Total</span><span>₹${total.toFixed(2)}</span></div>
   `;
 }
 

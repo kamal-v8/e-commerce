@@ -9,10 +9,21 @@ async function init() {
   // 1. Initial Logic
   let products = [];
   try {
-    console.log("Calling fetchProducts()...");
-    const rawProducts = await fetchProducts();
-    console.log("fetchProducts() success, count:", rawProducts.length);
-    products = rawProducts.map(p => ({ ...p, price: parseFloat(p.price) }));
+    const CACHE_VERSION = 'v2'; // Increment version to force refresh
+    const cachedVersion = sessionStorage.getItem('products_cache_version');
+    const cachedProducts = sessionStorage.getItem('products_cache');
+    
+    if (cachedProducts && cachedVersion === CACHE_VERSION) {
+      console.log("Using cached products...");
+      products = JSON.parse(cachedProducts);
+    } else {
+      console.log("Calling fetchProducts()...");
+      const rawProducts = await fetchProducts();
+      products = rawProducts.map(p => ({ ...p, price: parseFloat(p.price) }));
+      sessionStorage.setItem('products_cache', JSON.stringify(products));
+      sessionStorage.setItem('products_cache_version', CACHE_VERSION);
+      console.log("fetchProducts() success, count:", products.length);
+    }
   } catch (err) {
     console.error("CRITICAL: fetchProducts failed:", err);
   }
