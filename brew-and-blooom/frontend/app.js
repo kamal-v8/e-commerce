@@ -97,7 +97,9 @@ async function init() {
           await register(name, email, password);
           alert('Registration Success! Please Login.');
           window.location.reload();
-        } catch (err) { alert('Registration Failed'); }
+        } catch (err) { 
+          alert('Registration Failed: ' + err.message); 
+        }
       };
     }
     console.log("Listeners setup complete.");

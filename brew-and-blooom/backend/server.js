@@ -78,6 +78,20 @@ app.post('/api/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
+    // Validation
+    if (!name || name.length > 20) {
+      return res.status(400).json({ message: "Name must be between 1 and 20 characters." });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+      return res.status(400).json({ message: "Please provide a valid email address." });
+    }
+
+    if (!password || password.length > 50) {
+      return res.status(400).json({ message: "Password must be between 1 and 50 characters." });
+    }
+
     // Check if user exists
     const userResult = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
     if (userResult.rows.length > 0) {
