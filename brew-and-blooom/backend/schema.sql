@@ -32,11 +32,11 @@ SELECT 'Colombian Supremo', 16.50, 'Dark Roast', 'assets/coffee-w2.jpg', 'Balanc
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Colombian Supremo');
 
 INSERT INTO products (name, price, category, image, description)
-SELECT 'Sumatra Blend', 20.00, 'Dark Roast', 'assets/coffee-w4.jpg', 'Rich crema and intense flavor. Perfect for espresso machines.'
+SELECT 'Sumatra Blend', 20.00, 'Dark Roast', 'assets/coffee-w9.jpg', 'Rich crema and intense flavor. Perfect for espresso machines.'
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Sumatra Blend');
 
 INSERT INTO products (name, price, category, image, description)
-SELECT 'Morning Dew Arabica', 14.90, 'Medium Roast', 'assets/coffee-w5.jpg', 'Bright and crisp with a citrus zest and honeyed finish.'
+SELECT 'Morning Dew Arabica', 14.90, 'Medium Roast', 'assets/coffee-w10.jpg', 'Bright and crisp with a citrus zest and honeyed finish.'
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Morning Dew Arabica');
 
 INSERT INTO products (name, price, category, image, description)
