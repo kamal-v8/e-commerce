@@ -24,23 +24,23 @@ SELECT 'Blank Espresso Mandheling', 1400.00, 'Medium Roast', 'assets/coffee-w3.j
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Blank Espresso Mandheling');
 
 INSERT INTO products (name, price, category, image, description)
-SELECT 'Luna Colombian Supremo', 1100.00, 'Dark Roast', 'assets/coffee-w2.jpg', 'Balanced and smooth with a nutty sweetness and caramel finish.'
+SELECT 'Luna Colombian Supremo', 1100.00, 'Light Roast', 'assets/coffee-w2.jpg', 'Balanced and smooth with a nutty sweetness and caramel finish.'
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Luna Colombian Supremo');
 
 INSERT INTO products (name, price, category, image, description)
-SELECT 'Buna Sumatra Blend', 1850.00, 'Dark Roast', 'assets/coffee-w4.jpg', 'Rich crema and intense flavor. Perfect for espresso machines.'
+SELECT 'Buna Sumatra Blend', 1850.00, 'Light Roast', 'assets/coffee-w4.jpg', 'Rich crema and intense flavor. Perfect for espresso machines.'
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Buna Sumatra Blend');
 
 INSERT INTO products (name, price, category, image, description)
-SELECT 'Ethiopia Dew ', 950.00, 'Medium Roast', 'assets/coffee-w5.jpg', 'Bright and crisp with a citrus zest and honeyed finish.'
+SELECT 'Ethiopia Dew ', 950.00, 'Dark Roast', 'assets/coffee-w5.jpg', 'Bright and crisp with a citrus zest and honeyed finish.'
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Ethiopia Dew ');
 
 INSERT INTO products (name, price, category, image, description)
-SELECT 'Morning Brew Yirgacheffe', 1250.00, 'Light Roast', 'assets/coffee-w1.jpg', 'Bright, floral coffee with notes of jasmine and lemon.'
+SELECT 'Morning Brew Yirgacheffe', 1250.00, 'Dark Roast', 'assets/coffee-w1.jpg', 'Bright, floral coffee with notes of jasmine and lemon.'
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Morning Brew Yirgacheffe');
 
 INSERT INTO products (name, price, category, image, description)
-SELECT 'Sun-Drenched Sidamo', 1950.00, 'DARK Roast', 'assets/coffee-w6.jpg', 'Authentic Ethiopian heirloom with complex jasmine and tea-like notes.'
+SELECT 'Sun-Drenched Sidamo', 1950.00, 'Light Roast', 'assets/coffee-w6.jpg', 'Authentic Ethiopian heirloom with complex jasmine and tea-like notes.'
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Sun-Drenched Sidamo');
 
 INSERT INTO products (name, price, category, image, description)

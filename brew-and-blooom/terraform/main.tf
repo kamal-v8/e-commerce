@@ -145,6 +145,66 @@ resource "aws_instance" "learning" {
     volume_size = 9
     volume_type = "gp3"
   }
+
+  user_data = <<-EOF
+              #!/bin/bash
+              exec > >(tee /var/log/user_data.log|logger -t user-data -s 2>/dev/console) 2>&1
+              set -x
+
+              # Update and install dependencies
+              apt-get update
+              apt-get install -y ca-certificates curl gnupg certbot git
+
+              # Add Docker's official GPG key
+              install -m 0755 -d /etc/apt/keyrings
+              curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+              chmod a+r /etc/apt/keyrings/docker.gpg
+
+              # Add Docker repository (Fixed Syntax)
+              echo \
+                "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+                $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+                tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+              # Install Docker components
+              apt-get update
+              apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+              # Permission setup
+              usermod -aG docker ubuntu
+
+              # Application Setup
+              cd /home/ubuntu
+              git clone https://github.com/kamal-v8/e-commerce.git
+              chown -R ubuntu:ubuntu e-commerce
+              cd e-commerce/brew-and-blooom/
+
+              # Root .env configuration
+              cat <<EOT > .env
+              DB_USER=db
+              DB_PASSWORD=db-pass
+              DB_NAME=db
+              JWT_SECRET=my-little-secret
+              EOT
+
+              # Backend .env configuration
+              cd backend
+              cat <<EOT > .env
+              DB_USER=db-user-backend
+              DB_PASSWORD=db-password-backend
+              DB_HOST=localhost
+              DB_NAME=db
+              PORT=3000
+              EOT
+              cd ..
+
+              # SSL Certificate Generation (Allow failure if DNS not ready)
+              # certbot certonly --standalone -d zaptor.in -d www.zaptor.in --email kamal.v3011f@gmail.com --agree-tos --non-interactive || echo "Certbot failed, likely DNS propagation"
+
+              # Launch Application
+              # docker compose up --build -d
+              EOF
+
   tags = {
     Name = "EC2-Learning"
   }
