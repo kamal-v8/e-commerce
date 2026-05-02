@@ -150,6 +150,12 @@ resource "aws_instance" "learning" {
               #!/bin/bash
               exec > >(tee /var/log/user_data.log|logger -t user-data -s 2>/dev/console) 2>&1
               set -x
+  #
+              # Application Setup
+              cd /home/ubuntu
+              git clone https://github.com/kamal-v8/e-commerce.git
+              chown -R ubuntu:ubuntu e-commerce
+              cd e-commerce/brew-and-blooom/
 
               # Update and install dependencies
               apt-get update
@@ -172,12 +178,6 @@ resource "aws_instance" "learning" {
 
               # Permission setup
               usermod -aG docker ubuntu
-
-              # Application Setup
-              cd /home/ubuntu
-              git clone https://github.com/kamal-v8/e-commerce.git
-              chown -R ubuntu:ubuntu e-commerce
-              cd e-commerce/brew-and-blooom/
 
               # Root .env configuration
               cat <<EOT > .env
