@@ -29,8 +29,8 @@ SELECT 'Espresso Mandheling', 19.00, 'Medium Roast', 'assets/coffee-w3.jpg', 'Fu
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Simple Espresso Mandheling');
 
 INSERT INTO products (name, price, category, image, description)
-SELECT 'Sun-Drenched Sidamo', 22.00, 'DARK Roast', 'assets/coffee-w9.jpg', 'Authentic Ethiopian heirloom with complex jasmine and tea-like notes.'
-WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Sun-Drenched Sidamo');
+SELECT 'Buna Drenched Sidamo', 22.00, 'DARK Roast', 'assets/coffee-w9.jpg', 'Authentic Ethiopian heirloom with complex jasmine and tea-like notes.'
+WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Buna Drenched Sidamo');
 
 
 INSERT INTO products (name, price, category, image, description)
@@ -46,7 +46,7 @@ SELECT 'Morning Dew Arabica', 14.90, 'Light Roast', 'assets/coffee-w6.jpg', 'Bri
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Morning Dew Arabica');
 
 INSERT INTO products (name, price, category, image, description)
-SELECT 'Ethiopian Roasted Orchid', 17.50, 'Medium-Dark', 'assets/coffee-w10.jpg', 'A bold, aromatic blend featuring spicy undertones and a silky finish.'
+SELECT 'Ethiopian Roasted Orchid', 17.50, 'Medium-Dark', 'assets/coffee-w5.jpg', 'A bold, aromatic blend featuring spicy undertones and a silky finish.'
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Ethiopian Roasted Orchid');
 
 INSERT INTO products (name, price, category, image, description)

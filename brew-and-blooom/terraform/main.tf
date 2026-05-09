@@ -39,189 +39,177 @@ resource "aws_route_table_association" "public" {
   subnet_id      = aws_subnet.public.id
   route_table_id = aws_route_table.public.id
 }
-#___________________________________
+
+# ────────────────────────────────────────────────
 # Security Groups
-#___________________________________
+# ────────────────────────────────────────────────
 
 resource "aws_security_group" "ec2_sg" {
   name        = "ec2-inbound"
-  description = "allow http/s and ssh"
+  description = "allow http/s, ssh and app ports"
   vpc_id      = aws_vpc.main.id
 
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] # ipv6_cidr_blocks = ["${var.my_ip}/128"]
-    description = "ssh port open"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "SSH"
   }
+
   ingress {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    # ipv6_cidr_blocks = ["${var.my_ip}/128"]
-    description = "http port open"
+    description = "HTTP"
   }
+
   ingress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    # ipv6_cidr_blocks = ["${var.my_ip}/128"]
-    description = "https port open"
+    description = "HTTPS"
   }
+
   ingress {
     from_port   = 4000
     to_port     = 4000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    # ipv6_cidr_blocks = ["${var.my_ip}/128"]
-    description = "grafana port open"
+    description = "Grafana"
   }
+
   ingress {
     from_port   = 9000
     to_port     = 9000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    # ipv6_cidr_blocks = ["${var.my_ip}/128"]
-    description = "Prometheus port open"
-
+    description = "Prometheus"
   }
+
   ingress {
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    # ipv6_cidr_blocks = ["${var.my_ip}/128"]
-    description = "cAdvisor port open"
+    description = "cAdvisor"
   }
+
+
   ingress {
-    from_port   = 4000
-    to_port     = 4000
+    from_port   = 61000
+    to_port     = 61000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    # ipv6_cidr_blocks = ["${var.my_ip}/128"]
-    description = "grafana port open"
+    description = "mosh"
   }
-  ingress {
-    from_port   = 3300
-    to_port     = 3300
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-    # ipv6_cidr_blocks = ["${var.my_ip}/128"]
-    description = "SmartRoads port open"
-  }
+
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
-    description = "opend all ports for outbound"
+    description = "Allow all outbound"
   }
-  tags = { Name = "ec2-sg1" }
+
+  tags = { Name = "ec2-sg" }
 }
 
-#__________________
+# ────────────────────────────────────────────────
 # Key Pair
-#__________________
+# ────────────────────────────────────────────────
 
 resource "aws_key_pair" "deployer" {
   key_name   = "deployer-key"
   public_key = file("/home/kamal/.ssh/ec2-key.pub")
 }
 
-#__________________
-# EC2 Instance & Elastic  IP
-#__________________
+# ────────────────────────────────────────────────
+# EC2 Instance
+# ────────────────────────────────────────────────
+
 resource "aws_instance" "learning" {
-  ami                    = "ami-0ec10929233384c7f" # ubuntu us-east-1
+  ami                    = "ami-0ec10929233384c7f" # Ubuntu 24.04 us-east-1
   instance_type          = var.instance_type
   subnet_id              = aws_subnet.public.id
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
   key_name               = aws_key_pair.deployer.key_name
 
   root_block_device {
-    volume_size = 9
+    volume_size = 10
     volume_type = "gp3"
   }
 
+  user_data_replace_on_change = true
+
   user_data = <<-EOF
-              #!/bin/bash
-              exec > >(tee /var/log/user_data.log|logger -t user-data -s 2>/dev/console) 2>&1
-              set -x
-  #
-              # Application Setup
-              cd /home/ubuntu
-              git clone https://github.com/kamal-v8/e-commerce.git
-              chown -R ubuntu:ubuntu e-commerce
-              cd e-commerce/brew-and-blooom/
+#!/bin/bash
+set -ex
 
-              # Update and install dependencies
-              apt-get update
-              apt-get install -y ca-certificates curl gnupg certbot git
+# 1. Update and install basic dependencies
+apt-get update -y
+apt-get install -y mosh ca-certificates curl gnupg certbot git
 
-              # Add Docker's official GPG key
-              install -m 0755 -d /etc/apt/keyrings
-              curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-              chmod a+r /etc/apt/keyrings/docker.gpg
+# 2. Install Docker
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+chmod a+r /etc/apt/keyrings/docker.gpg
 
-              # Add Docker repository (Fixed Syntax)
-              echo \
-                "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-                $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-                tee /etc/apt/sources.list.d/docker.list > /dev/null
+echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-              # Install Docker components
-              apt-get update
-              apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+apt-get update -y
+apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-              # Permission setup
-              usermod -aG docker ubuntu
+# 3. Setup user permissions
+usermod -aG docker ubuntu
 
-              # Root .env configuration
-              cat <<EOT > .env
-              DB_USER=db
-              DB_PASSWORD=db-pass
-              DB_NAME=db
-              JWT_SECRET=my-little-secret
-              EOT
+# 4. Setup Project
+cd /home/ubuntu
+sudo -u ubuntu git clone https://github.com/kamal-v8/e-commerce.git
+cd e-commerce/brew-and-blooom || cd e-commerce
 
-              # Backend .env configuration
-              cd backend
-              cat <<EOT > .env
-              DB_USER=db-user-backend
-              DB_PASSWORD=db-password-backend
-              DB_HOST=localhost
-              DB_NAME=db
-              PORT=3000
-              EOT
-              cd ..
+# 5. Create .env Files
+cat <<EOT > .env
+DB_USER=db
+DB_PASSWORD=db-pass
+DB_NAME=db
+JWT_SECRET=my-little-secret
+EOT
 
-              # SSL Certificate Generation (Allow failure if DNS not ready)
-              # certbot certonly --standalone -d zaptor.in -d www.zaptor.in --email kamal.v3011f@gmail.com --agree-tos --non-interactive || echo "Certbot failed, likely DNS propagation"
+mkdir -p backend
+cat <<EOT > backend/.env
+DB_PASSWORD=db-pass
+DB_HOST=db
+DB_NAME=db
+PORT=3000
+JWT_SECRET=my-little-secret
+EOT
 
-              # Launch Application
-              # docker compose up --build -d
-              EOF
+# 6. Fix Permissions & Start
+chown -R ubuntu:ubuntu /home/ubuntu/e-commerce
+if [ -f "docker-compose.yml" ]; then
+  sudo -u ubuntu docker compose up -d
+fi
+EOF
 
-  tags = {
-    Name = "EC2-Learning"
-  }
+  tags = { Name = "EC2-Learning" }
 }
 
-#Elastic IP
+# ────────────────────────────────────────────────
+# Elastic IP
+# ────────────────────────────────────────────────
 
 resource "aws_eip" "learning_eip" {
   domain = "vpc"
   tags   = { Name = "learning-eip" }
 }
 
-# Associate EIP with the instance
 resource "aws_eip_association" "eip_assoc" {
   instance_id   = aws_instance.learning.id
   allocation_id = aws_eip.learning_eip.id
 }
-
-
-
