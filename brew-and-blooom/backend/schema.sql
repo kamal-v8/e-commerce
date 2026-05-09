@@ -25,6 +25,15 @@ SELECT 'Luna Yirgacheffe', 1890, 'Light Roast', 'assets/coffee-w2.jpg', 'Bright,
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Ethiopian Yirgacheffe');
 
 INSERT INTO products (name, price, category, image, description)
+SELECT 'Morning Dew Arabica', 1490, 'Light Roast', 'assets/coffee-w6.jpg', 'Bright and crisp with a citrus zest and honeyed finish.'
+WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Morning Dew Arabica');
+
+INSERT INTO products (name, price, category, image, description)
+SELECT 'Golden Harvest', 1850, 'Medium Roast', 'assets/coffee-w7.jpg', 'Rich and buttery with a sweet caramel aroma and maple notes.'
+WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Golden Harvest');
+
+
+INSERT INTO products (name, price, category, image, description)
 SELECT 'Espresso Mandheling', 1900, 'Medium Roast', 'assets/coffee-w3.jpg', 'Full-bodied and earthy with low acidity.'
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Simple Espresso Mandheling');
 
@@ -38,16 +47,7 @@ SELECT 'Rozali Colombian Supremo', 1650, 'Dark Roast', 'assets/coffee-w8.jpg', '
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Rozali Colombian Supremo');
 
 INSERT INTO products (name, price, category, image, description)
-SELECT 'Morning Dew Arabica', 1490, 'Light Roast', 'assets/coffee-w6.jpg', 'Bright and crisp with a citrus zest and honeyed finish.'
-WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Morning Dew Arabica');
-
-INSERT INTO products (name, price, category, image, description)
 SELECT 'Ethiopian Roasted Orchid', 1750, 'Medium-Dark', 'assets/coffee-w5.jpg', 'A bold, aromatic blend featuring spicy undertones and a silky finish.'
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Ethiopian Roasted Orchid');
-
-INSERT INTO products (name, price, category, image, description)
-SELECT 'Golden Harvest', 1850, 'Medium Roast', 'assets/coffee-w7.jpg', 'Rich and buttery with a sweet caramel aroma and maple notes.'
-WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Golden Harvest');
-
 
 
