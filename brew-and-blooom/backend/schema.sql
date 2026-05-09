@@ -29,7 +29,7 @@ SELECT 'Espresso Mandheling', 19.00, 'Medium Roast', 'assets/coffee-w3.jpg', 'Fu
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Simple Espresso Mandheling');
 
 INSERT INTO products (name, price, category, image, description)
-SELECT 'Buna Drenched Sidamo', 22.00, 'DARK Roast', 'assets/coffee-w9.jpg', 'Authentic Ethiopian heirloom with complex jasmine and tea-like notes.'
+SELECT 'Buna Drenched Sidamo', 22.00, 'DARK Roast', 'assets/coffee-w4.jpg', 'Authentic Ethiopian heirloom with complex jasmine and tea-like notes.'
 WHERE NOT EXISTS (SELECT 1 FROM products WHERE name = 'Buna Drenched Sidamo');
 
 
